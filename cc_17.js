@@ -77,3 +77,58 @@ vipCustomer.addPurchase(200);
 vipCustomer.addPurchase(150);
 console.log(`VIP total spent (with bonus): $${vipCustomer.getTotalSpent()}`);
 
+
+// Task 4: Client Report System
+
+class ClientReport {
+    constructor(customers = [], vipCustomers = []) {
+        this.customers = customers;
+        this.vipCustomers = vipCustomers;
+        this.allClients = [...customers, ...vipCustomers];
+    }
+
+    // Calculate total revenue from all customers including VIP
+    getTotalRevenue() {
+        return this.allClients.reduce((total, client) => total + client.getTotalSpent(), 0);
+    }
+
+    // Find customers who spent over $500 (including VIP)
+    getHighSpendingClients() {
+        return this.allClients.filter(client => client.getTotalSpent() > 500);
+    }
+
+    // Create an array of customer names and total spent (including VIP)
+    getClientSummary() {
+        return this.allClients.map(client => ({
+            name: client.name,
+            totalSpent: client.getTotalSpent(),
+            type: client instanceof VIPCustomer ? 'VIP' : 'Regular'
+        }));
+    }
+}
+
+// Create more VIP customers
+
+const vipCustomer1 = new VIPCustomer("Jonny Wilson", "james@example.com", "Gold");
+vipCustomer1.addPurchase(200);
+vipCustomer1.addPurchase(350); // Total with bonus: 605
+
+const vipCustomer2 = new VIPCustomer("Emily Brown", "emily@example.com", "Silver");
+vipCustomer2.addPurchase(100);
+vipCustomer2.addPurchase(150); // Total with bonus: 275
+
+// Create a client report
+const report = new ClientReport([customer1, customer2], [vipCustomer1, vipCustomer2]);
+
+// Log the results
+console.log("Total revenue:", report.getTotalRevenue());
+
+console.log("High-spending clients (over $500):");
+console.log(report.getHighSpendingClients().map(client => ({
+    name: client.name,
+    total: client.getTotalSpent()
+})));
+
+console.log("Client summary:");
+console.log(report.getClientSummary());
+
