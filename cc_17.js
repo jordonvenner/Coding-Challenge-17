@@ -56,3 +56,24 @@ console.log(`Total spent by John Doe: $${salesRep.getClientTotal("John Doe")}`);
 console.log(`Total spent by Jane Smith: $${salesRep.getClientTotal("Jane Smith")}`);
 
 
+
+//Task 3
+
+class VIPCustomer extends Customer {
+    constructor(name, email, vipLevel) {
+        super(name, email);
+        this.vipLevel = vipLevel;
+    }
+
+    getTotalSpent() {
+        const total = super.getTotalSpent();
+        return total * 1.10; // 10% bonus
+    }
+}
+
+// Log: VIP customer's total spent with bonus
+const vipCustomer = new VIPCustomer("James Wilson", "james@example.com", "Gold");
+vipCustomer.addPurchase(200);
+vipCustomer.addPurchase(150);
+console.log(`VIP total spent (with bonus): $${vipCustomer.getTotalSpent()}`);
+
